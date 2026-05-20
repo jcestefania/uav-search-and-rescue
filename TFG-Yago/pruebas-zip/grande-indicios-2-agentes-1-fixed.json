@@ -1,0 +1,54 @@
+{
+    "version": "1.1",
+    "size": [
+        100,
+        100
+    ],
+    "cov": [
+        [
+            1,
+            0
+        ],
+        [
+            0,
+            1
+        ]
+    ],
+    "indicios": [
+        [
+            24,
+            20
+        ],
+        [
+            70,
+            75
+        ]
+    ],
+    "pesos": [
+        0.6,
+        0.4
+    ],
+    "obj_pos": [
+        null
+    ],
+    "indicio": -1,
+    "semilla": 0,
+    "num_agents": 1,
+    "height": 10,
+    "init_pos": [
+        [
+            80,
+            40
+        ]
+    ],
+    "mov_delta": 1,
+    "posible_moves": "8 dir",
+    "min_dist": 3,
+    "lambda": 0.5,
+    "pdmax": 0.8,
+    "dmax": 2.1,
+    "sigma": 0.7,
+    "num_steps": 1200,
+    "itersteps": 100,
+    "separation": 2
+}

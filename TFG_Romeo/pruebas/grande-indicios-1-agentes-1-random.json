@@ -1,0 +1,65 @@
+{
+    "version": "1.1",
+    "size": [
+        120,
+        120
+    ],
+    "cov": [
+        [
+            1,
+            0
+        ],
+        [
+            0,
+            1
+        ]
+    ],
+    "indicios": [
+        [
+            74,
+            82
+        ]
+    ],
+    "obj_pos": [
+        null
+    ],
+    "indicio": -1,
+    "semilla": 999,
+    "num_agents": 1,
+    "height": 10,
+    "init_pos": [
+        [
+            27,
+            62
+        ]
+    ],
+    "mov_delta": 1,
+    "posible_moves": "8 dir",
+    "min_dist": 3,
+    "lambda": 0.75,
+    "pdmax": 0.6,
+    "dmax": 4.5,
+    "sigma": 0.7,
+    "num_steps": 600,
+    "itersteps": 100,
+    "separation": 6,
+        "pesos": [
+        null
+    ],
+    "algoritmo_busqueda": "ACO",
+    "funcion_objetivo": "ET",
+    "show_evolution": false,
+    "eps": 1e-12,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "rho": 0.1,
+    "Q": 20.0,
+    "local_rho": 0.1,
+    "n_iterations_aco": 46,
+    "n_onlookers": 5,
+    "n_employed": 5,
+    "n_iterations_abc": 45,
+    "limit": 5,
+    "n_stars": 7,
+    "n_iterations_bha": 45
+}

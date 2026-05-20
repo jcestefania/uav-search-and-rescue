@@ -1,0 +1,247 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.5 1bd436f1",
+  "osm3s": {
+    "timestamp_osm_base": "2025-03-14T09:43:52Z",
+    "timestamp_areas_base": "2025-02-06T02:17:44Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 27263783,
+  "bounds": {
+    "minlat": 40.5426545,
+    "minlon": -4.0115245,
+    "maxlat": 40.5467813,
+    "maxlon": -4.0110206
+  },
+  "nodes": [
+    8795671107,
+    3437968926,
+    299250953,
+    3437968928,
+    414955109,
+    5433222636,
+    1833745788,
+    429433767,
+    3437968930,
+    1833745791,
+    429433770,
+    304103975,
+    8587967825,
+    429433764,
+    3461432998,
+    9434949276,
+    1937943580,
+    8795671097
+  ],
+  "geometry": [
+    { "lat": 40.5426545, "lon": -4.0110206 },
+    { "lat": 40.5427743, "lon": -4.0110579 },
+    { "lat": 40.5428976, "lon": -4.0110858 },
+    { "lat": 40.5431415, "lon": -4.0111129 },
+    { "lat": 40.5437058, "lon": -4.0111786 },
+    { "lat": 40.5443408, "lon": -4.0112565 },
+    { "lat": 40.5445053, "lon": -4.0112777 },
+    { "lat": 40.5447130, "lon": -4.0113365 },
+    { "lat": 40.5449205, "lon": -4.0114191 },
+    { "lat": 40.5451110, "lon": -4.0114954 },
+    { "lat": 40.5452588, "lon": -4.0115245 },
+    { "lat": 40.5454448, "lon": -4.0115223 },
+    { "lat": 40.5463023, "lon": -4.0113513 },
+    { "lat": 40.5464478, "lon": -4.0113226 },
+    { "lat": 40.5465467, "lon": -4.0113069 },
+    { "lat": 40.5466598, "lon": -4.0112887 },
+    { "lat": 40.5466899, "lon": -4.0112838 },
+    { "lat": 40.5467813, "lon": -4.0112669 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 795418415,
+  "bounds": {
+    "minlat": 40.5517518,
+    "minlon": -4.0116348,
+    "maxlat": 40.5520825,
+    "maxlon": -4.0115195
+  },
+  "nodes": [
+    7439597243,
+    8587967842,
+    7439597244,
+    7439597245
+  ],
+  "geometry": [
+    { "lat": 40.5520825, "lon": -4.0116348 },
+    { "lat": 40.5519823, "lon": -4.0115836 },
+    { "lat": 40.5519203, "lon": -4.0115576 },
+    { "lat": 40.5517518, "lon": -4.0115195 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 795418417,
+  "bounds": {
+    "minlat": 40.5517518,
+    "minlon": -4.0115195,
+    "maxlat": 40.5520823,
+    "maxlon": -4.0114219
+  },
+  "nodes": [
+    7439597245,
+    1833745810,
+    5224510055,
+    304103667
+  ],
+  "geometry": [
+    { "lat": 40.5517518, "lon": -4.0115195 },
+    { "lat": 40.5519214, "lon": -4.0114906 },
+    { "lat": 40.5520164, "lon": -4.0114647 },
+    { "lat": 40.5520823, "lon": -4.0114219 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 950097067,
+  "bounds": {
+    "minlat": 40.5425497,
+    "minlon": -4.0110306,
+    "maxlat": 40.5426545,
+    "maxlon": -4.0110147
+  },
+  "nodes": [
+    8795671107,
+    8795671114,
+    8795671112,
+    8795671108,
+    1667141900
+  ],
+  "geometry": [
+    { "lat": 40.5426545, "lon": -4.0110206 },
+    { "lat": 40.5426361, "lon": -4.0110162 },
+    { "lat": 40.5426183, "lon": -4.0110147 },
+    { "lat": 40.5425882, "lon": -4.0110185 },
+    { "lat": 40.5425497, "lon": -4.0110306 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 950097068,
+  "bounds": {
+    "minlat": 40.5425667,
+    "minlon": -4.0110206,
+    "maxlat": 40.5426545,
+    "maxlon": -4.0109027
+  },
+  "nodes": [
+    8795671104,
+    8795671111,
+    8795671110,
+    8795671109,
+    8795671113,
+    8795671107
+  ],
+  "geometry": [
+    { "lat": 40.5425667, "lon": -4.0109027 },
+    { "lat": 40.5425865, "lon": -4.0109399 },
+    { "lat": 40.5426065, "lon": -4.0109719 },
+    { "lat": 40.5426303, "lon": -4.0110004 },
+    { "lat": 40.5426421, "lon": -4.0110127 },
+    { "lat": 40.5426545, "lon": -4.0110206 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 973168193,
+  "bounds": {
+    "minlat": 40.5468068,
+    "minlon": -4.0115195,
+    "maxlat": 40.5517518,
+    "maxlon": -4.0111654
+  },
+  "nodes": [
+    1833745800,
+    304104189,
+    8587967848,
+    5433222637,
+    3437968945,
+    3437968956,
+    299250957,
+    5435131732,
+    304103778,
+    5433222634,
+    1667002541,
+    1667002599,
+    2639142003,
+    7439597245
+  ],
+  "geometry": [
+    { "lat": 40.5468068, "lon": -4.0112625 },
+    { "lat": 40.5470524, "lon": -4.0112241 },
+    { "lat": 40.5471131, "lon": -4.0112150 },
+    { "lat": 40.5473097, "lon": -4.0111840 },
+    { "lat": 40.5475419, "lon": -4.0111658 },
+    { "lat": 40.5476902, "lon": -4.0111654 },
+    { "lat": 40.5486052, "lon": -4.0112410 },
+    { "lat": 40.5492492, "lon": -4.0112973 },
+    { "lat": 40.5493416, "lon": -4.0113054 },
+    { "lat": 40.5494265, "lon": -4.0113102 },
+    { "lat": 40.5496536, "lon": -4.0113315 },
+    { "lat": 40.5507101, "lon": -4.0114569 },
+    { "lat": 40.5514874, "lon": -4.0115119 },
+    { "lat": 40.5517518, "lon": -4.0115195 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "maxspeed": "40",
+    "name": "Avenida Gregorio Peces-Barba Martínez",
+    "old_name": "Avenida de la Universidad Carlos III",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+}
+
+  ]
+}

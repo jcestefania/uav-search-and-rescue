@@ -1,0 +1,109 @@
+{
+    "version": "1.1",
+    "size": [
+        100,
+        100
+    ],
+    "cov": [
+        [
+            1,
+            0
+        ],
+        [
+            0,
+            1
+        ]
+    ],
+    "indicios": [
+        [
+            80,
+            70
+        ],
+        [
+            20,
+            35
+        ],
+        [
+            33,
+            52
+        ],
+        [
+            48,
+            47
+        ],
+        [
+            55,
+            62
+        ],
+        [
+            67,
+            40
+        ],
+        [
+            20,
+            60
+        ],
+        [
+            40,
+            20
+        ],
+        [
+            90,
+            55
+        ],
+        [
+            12,
+            18
+        ]
+    ],
+    "obj_pos": [
+        null
+    ],
+    "indicio": 0,
+    "semilla": 0,
+    "num_agents": 3,
+    "height": 10,
+    "init_pos": [
+        [
+            1,
+            20
+        ],
+        [
+            1,
+            40
+        ],
+        [
+            1,
+            60
+        ]
+    ],
+    "mov_delta": 1,
+    "posible_moves": "8 dir",
+    "min_dist": 1,
+    "lambda": 0.5,
+    "pdmax": 0.8,
+    "dmax": 2.1,
+    "sigma": 0.7,
+    "num_steps": 500,
+    "itersteps": 15,
+    "separation": 5,
+    "pesos": [
+        null
+    ],
+    "algoritmo_busqueda": "BHA",
+    "funcion_objetivo": "ET",
+    "show_evolution": true,
+    "eps": 1e-12,
+    "alpha": 4.0,
+    "beta": 1.0,
+    "rho": 0.05,
+    "Q": 20.0,
+    "local_rho": 0.025,
+    "n_iterations_aco": 100,
+    "n_onlookers": 1,
+    "n_employed": 1,
+    "n_iterations_abc": 100,
+    "limit": 10,
+    "n_stars": 5,
+    "n_iterations_bha": 100
+}

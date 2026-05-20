@@ -1,0 +1,11 @@
+name: mts-uncertain-search
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - plotly
+  - pillow
+  - pip
+  - scipy

@@ -1,0 +1,145 @@
+import math
+from shapely.geometry import Point, Polygon
+import pymap3d as pm
+
+# Calcula el perímetro del área donde volará el dron
+def area(centroide: tuple, radio: int, tipo: str, escala: float, num_puntos=36):
+    longitud_centro, latitud_centro = centroide
+
+    radio_grados_lat = (radio*escala) / 111000  # Convertir el radio a grados de latitud
+    radio_grados_lon = (radio*escala) / (111000 * math.cos(math.radians(latitud_centro)))  # Convertir el radio a grados de longitud
+
+    coordenadas_perimetro = []
+
+    if tipo == "circular":
+        # Crear puntos en un círculo alrededor del centroide
+        for i in range(num_puntos):
+            angulo = 2 * math.pi * i / num_puntos
+            delta_lat = radio_grados_lat * math.sin(angulo)
+            delta_lon = radio_grados_lon * math.cos(angulo)
+            lat = latitud_centro + delta_lat
+            lon = longitud_centro + delta_lon
+            coordenadas_perimetro.append((lon, lat))
+
+    elif tipo == "rectangular":
+        # Crear los vértices de un rectángulo alrededor del centroide
+        coordenadas_perimetro = [
+            (longitud_centro - radio_grados_lon, latitud_centro - radio_grados_lat),  # Suroeste
+            (longitud_centro + radio_grados_lon, latitud_centro - radio_grados_lat),  # Sureste
+            (longitud_centro + radio_grados_lon, latitud_centro + radio_grados_lat),  # Noreste
+            (longitud_centro - radio_grados_lon, latitud_centro + radio_grados_lat),  # Noroeste
+            (longitud_centro - radio_grados_lon, latitud_centro - radio_grados_lat)   # Cerrar el rectángulo
+        ]
+
+    else:
+        raise ValueError("Tipo de área no válido. Usa 'circular' o 'rectangular'.")
+
+    return coordenadas_perimetro
+
+
+def numero_cuadriculas(radio, escala, tam_cuadricula):
+    # Asumiendo que el área siempre va a ser un cuadrado (está en metros)
+
+    cuadriculas_ancho = (2*radio*escala) / tam_cuadricula
+    cuadriculas_largo = (2*radio*escala) / tam_cuadricula
+
+    #total_cuadriculas = cuadriculas_ancho * cuadriculas_largo
+
+    return cuadriculas_ancho, cuadriculas_largo # Aunque sea un cuadrado, paso ambos por si en un futuro cambio la forma del perímetro
+
+def delta_lat_lon(top_left_lat, tam_cuadricula):
+    """Calcular cuántos grados en latitud y longitud equivale 1 metro (diferencial)
+    Regla de 3: calculo cuánto equivale 1 metro en º de latitud y longitud y luego multiplico el tamaño de la cuadricula por eso"""
+
+    radio_tierra = 6378.137 # en km
+    pi = math.pi
+
+    m2degree = (1 / ((2 * pi /360) * radio_tierra)) / 1000 # A cuántos grados en latitud (también se usa para la longitud) corresponde un metro
+    delta_lat = (tam_cuadricula) * m2degree
+
+    delta_lon = (tam_cuadricula) * m2degree / math.cos(math.radians(top_left_lat))
+
+    return delta_lat, delta_lon
+
+def coords_cuadricula(coordenadas_perimetro, cuadriculas_ancho, cuadriculas_largo, delta_lat, delta_lon):
+    
+    suroeste, sureste, noreste, noroeste, _ = coordenadas_perimetro
+
+    coords_malla = []
+
+    for i in range(int(cuadriculas_ancho)):
+        for j in range(int(cuadriculas_largo)):
+
+            # Calcular las coordenadas de los vértices del cuadrado
+            lon_min = noroeste[0] + (i * delta_lon)  # Límite oeste del cuadrado
+            lon_max = lon_min + delta_lon            # Límite este del cuadrado
+            lat_max = noroeste[1] - (j * delta_lat)  # Límite norte del cuadrado
+            lat_min = lat_max - delta_lat            # Límite sur del cuadrado
+
+  
+            cuadrado = [
+                [lon_min, lat_max],  # Esquina noroeste
+                [lon_max, lat_max],  # Esquina noreste
+                [lon_max, lat_min],  # Esquina sureste
+                [lon_min, lat_min],  # Esquina suroeste
+                [lon_min, lat_max]   # Repetir la esquina noroeste para cerrar el cuadrado
+            ]
+
+            coords_malla.append(cuadrado)
+
+    return coords_malla
+
+
+def coords_globales_a_locales(origen, coords):
+
+    # Convertir el centroide (que será el origen) a ENU
+    lat_ref, lon_ref = origen
+    x_ref, y_ref, _ = pm.geodetic2enu(lat_ref, lon_ref, 0, lat_ref, lon_ref, 0)  # MIRAR ALTITUD
+    print("Punto origen")
+    print(x_ref, y_ref)
+    
+    # comprobar primero si lo que le he pasado son las coords del dron
+    if len(coords) <= 1:
+        lon, lat = coords[0][0],coords[0][1]
+        x, y, _ = pm.geodetic2enu(lat, lon, 0, lat_ref, lon_ref, 0)
+        return [float(x), float(y)]
+
+    coordenadas_locales = []
+
+    for cuadrado in coords:
+
+        cuadrado_local = []
+
+        for lon, lat in cuadrado:
+
+            # Convertir coordenadas globales (lat, lon) a coordenadas ENU
+            x, y, _ = pm.geodetic2enu(lat, lon, 0, lat_ref, lon_ref, 0)
+
+            # Trasladar las coordenadas al origen del centroide
+            cuadrado_local.append([float(x - x_ref), float(y - y_ref)])  # HACE FALTA RESTAR?
+
+
+        coordenadas_locales.append(cuadrado_local)
+
+    return coordenadas_locales
+
+
+def generar_matriz_indicios(malla, coords_uni):
+
+    # Crear el polígono de la universidad
+    poligono_parcela = Polygon(coords_uni)
+
+    # Crear la matriz de indicios inicializada a ceros
+    matriz_indicios = np.zeros(grid_size, dtype=int)  # Inicializar como matriz 2D
+    
+    # Iterar sobre la malla para llenar la matriz
+    for idx, cuadrado in enumerate(malla):
+        fila = idx // grid_size[1]  # Calcular la fila correspondiente
+        columna = idx % grid_size[1]  # Calcular la columna correspondiente
+        
+        # Verificar si algún punto del cuadrado está dentro del polígono
+        if any(poligono_parcela.contains(Point(coord)) for coord in cuadrado):
+            matriz_indicios[fila, columna] = 1  # Marcar celda con un indicio
+    
+    return matriz_indicios
+

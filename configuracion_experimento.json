@@ -1,0 +1,43 @@
+{
+  "nombre_salida": "resultados_montecarlo_configurable.csv",
+  "variaciones": {
+    "objetivo": false,
+    "covarianza": false,
+    "agente": false
+  },
+  "num_iteraciones": 1,
+  "algoritmos": [
+    "greedy",
+    "bf_expanding",
+    "greedy_bk_dist"
+  ],
+  "actualizar_bk": false,
+  "greedy_bk_dist_params": {
+    "alpha": 1.0,
+    "beta": 0.5
+  },
+  "config_base": {
+    "lado_celda": 0.2,
+    "teselados": [
+      "cuadrado",
+      "triangular",
+      "hexagonal"
+    ],
+    "poligono": [
+      [0, 0],
+      [0, 5],
+      [5, 5],
+      [5, 0]
+    ],
+    "objetivo": {
+      "centro": [2.5, 2.5],
+      "cov": [
+        [0.1, 0],
+        [0, 0.1]
+      ]
+    },
+    "agente": {
+      "posicion_inicial": [0.5, 0.5]
+    }
+  }
+}

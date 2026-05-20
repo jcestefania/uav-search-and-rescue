@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Brotón Gutiérrez"
+  given-names: "Yago"
+  orcid: "https://orcid.org/0009-0003-4440-3151"
+- family-names: "Llerena Caña"
+  given-names: "Juan Pedro"
+  orcid: "https://orcid.org/0000-0002-3476-6261"
+- family-names: "García Herrero"
+  given-names: "Jesus"
+  orcid: "https://orcid.org/0000-0003-1768-2688"
+title: "MTS-UncertainEnvironment"
+version: 1.0.0
+url: "https://github.com/Jompy-GitHub/MTS-UncertainEnvironment"

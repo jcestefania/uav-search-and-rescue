@@ -1,0 +1,50 @@
+{
+    "version": "1.1",
+    "size": [
+        30,
+        30
+    ],
+    "cov": [
+        [
+            1,
+            0
+        ],
+        [
+            0,
+            1
+        ]
+    ],
+    "indicios": [
+        [
+            25,
+            15
+        ],
+        [
+            7,
+            15
+        ]
+    ],
+    "pesos": [
+        null
+    ],
+    "obj_pos": [
+        null
+    ],
+    "indicio": 1,
+    "semilla": 0,
+    "num_agents": 1,
+    "height": 10,
+    "init_pos": [
+        null
+    ],
+    "mov_delta": 1,
+    "posible_moves": "8 dir",
+    "min_dist": 3,
+    "lambda": 0.5,
+    "pdmax": 0.8,
+    "dmax": 2.1,
+    "sigma": 0.7,
+    "num_steps": 200,
+    "itersteps": 50,
+    "separation": 3
+}
