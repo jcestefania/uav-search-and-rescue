@@ -110,30 +110,38 @@ def dibujar_animacion(
     list_track_x = np.array(list_track_x)
     list_track_z = np.array(list_track_z)
 
-    # Generar los fotogramas
+    # Generar los fotogramas (con submuestreo si hay demasiados pasos para evitar errores de memoria/límite de Plotly)
+    step_skip = 1
+    if steps > 100:
+        step_skip = int(np.ceil(steps / 100))
+
     ui_frames = []
-    for k in range(steps):
+    for k in range(0, steps, step_skip):
         iter_horitonte = 50 * (k // 50)
         centro_horizonte = (
             list_track_x[0][iter_horitonte],
             list_track_y[0][iter_horitonte],
         )
 
+        y_target = max(0, min(int(goal[k][1]), BK[k].shape[0] - 1))
+        x_target = max(0, min(int(goal[k][0]), BK[k].shape[1] - 1))
+        z_target = BK[k][y_target, x_target] * 25 + 1.5  # Situar 1.5 metros por encima de la superficie de probabilidad
+
         data = [
             go.Surface(
                 z=BK[k] * 25,  # Escalado para que las probabilidades se vean bien
-                colorscale="hot",
+                colorscale="YlOrRd",
                 colorbar=dict(orientation="h", y=-0.25, x=0.5),
                 name="Prob",
             ),
             go.Scatter3d(
                 x=[goal[k][0]],
                 y=[goal[k][1]],
-                z=[ground_offset],
+                z=[z_target],
                 name="Target",
                 mode="markers",
                 marker_symbol="x",
-                marker=dict(size=4, color="red"),
+                marker=dict(size=6, color="red"),
             ),
         ]
         if horizon_size:
@@ -270,11 +278,7 @@ def dibujar_animacion(
     titulo = f"Búsqueda de objetivo usando semilla {seed}"
     fig.update_layout(scene_camera=camera, template=templ, title=titulo)
     fig.show()
-    # Opcional: Guardar la imagen para la memoria
-    # Primero quitar el título y los botones
-    fig.update_layout(showlegend=False, title=None)
-    fig.write_image("imagenes/image.pdf", format="pdf")  # Para la memoria
-    fig.write_image("imagenes/image.jpeg", format="jpeg")  # Para los cuadernillos
+
 
     # Exportar a video/gif
     if not to_gif:

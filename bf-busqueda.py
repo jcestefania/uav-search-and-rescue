@@ -6,6 +6,7 @@ Archivo unificado para todos los algoritmos de búsqueda:
 """
 
 import json
+import os
 import sys
 import numpy as np
 from functools import partial
@@ -122,7 +123,25 @@ indicios = np.array(params["indicios"])
 if len(COV.shape) == 2:
     COV = np.array([COV] * len(indicios))
 
-bk = calcular_prob(size, COV, indicios, pesos)
+# Probabilidad
+ruta_real = params.get("ruta_mapa_real")
+
+if ruta_real:
+    # --- CARGA DESDE SARENV ---
+    # Buscamos el .npy en la misma carpeta que el JSON
+    path_npy = os.path.join(os.path.dirname(sys.argv[1]), ruta_real)
+    print(f"Cargando mapa real desde: {path_npy}")
+    bk = np.load(path_npy)
+    
+    # Validación de seguridad y normalización extra
+    if bk.shape != (size[1], size[0]): # Recordar que numpy es (y, x)
+        print(f"WARNING: Dimensiones del mapa {bk.shape} no coinciden con size {size[::-1]}")
+    
+    if np.sum(bk) > 0:
+        bk = bk / np.sum(bk)
+else:
+    # --- FALLBACK: GENERACIÓN SINTÉTICA ORIGINAL ---
+    bk = calcular_prob(size, COV, indicios, pesos)
 
 # Configuración agentes
 N_AGENTS = params["num_agents"]
@@ -149,7 +168,14 @@ if indicio_elegido == -1:
     indicio_elegido = np.random.randint(0, len(indicios))
 
 if goal == [None]:
-    goal = random_target(indicios, COV, indicio_elegido, 3)
+    if ruta_real:
+        # Muestrear posición del objetivo según la distribución de probabilidad real (bk)
+        flat_bk = bk.flatten()
+        flat_idx = np.random.choice(len(flat_bk), p=flat_bk)
+        y_goal, x_goal = np.unravel_index(flat_idx, bk.shape)
+        goal = np.array([x_goal, y_goal], dtype=float)
+    else:
+        goal = random_target(indicios, COV, indicio_elegido, 3)
     goal_seed = seed
 
 goal = celda_mas_cercana(goal, bk)
@@ -362,13 +388,17 @@ steps = len(BK)
 # ------------------------------------------------------------
 # GUARDAR RESULTADOS Y VISUALIZACIÓN
 # ------------------------------------------------------------
-df = crear_dataframe(N_AGENTS, list_x, list_y, list_z, list_target, finder, agent_seed, goal_seed)
-guardar_dataframe(df, "resultados/", nombre_alg, sys.argv[1].split("/")[-1].split(".")[0])
+# Determinar carpeta de salida: si la config es del TFM, guardar en TFM_JC/resultados/
+out_dir = "resultados/"
+if "TFM_JC" in sys.argv[1]:
+    out_dir = "TFM_JC/resultados/"
 
-"""
+df = crear_dataframe(N_AGENTS, list_x, list_y, list_z, list_target, finder, agent_seed, goal_seed)
+guardar_dataframe(df, out_dir, nombre_alg, sys.argv[1].split("/")[-1].split(".")[0])
+
+
 dibujar_animacion(N_AGENTS, list_x, list_y, list_z, BK, list_target, size, steps, 
                   seed, sensor.perimetro, height=HEIGHT)
-"""
 
 if GENERAR_PLAN:
     to_plan(list_x, list_y, list_z, 0.0, 40.543595, -4.012085, "plan")
