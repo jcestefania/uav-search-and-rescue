@@ -11,13 +11,21 @@ import sys
 import numpy as np
 from functools import partial
 
-from busquedas.rbf import rbf
+# Selector para intercambiar entre el código original lento o el optimizado rápido
+USAR_OPTIMIZACION = True  # Por defecto original
+
+if USAR_OPTIMIZACION:
+    from busquedas.rbf_opt import rbf
+    from busquedas.heuristicas_opt import heur_correcion_miopia
+else:
+    from busquedas.rbf import rbf
+    from busquedas.heuristicas import heur_correcion_miopia
+
 from configurar import calcular_prob, celda_mas_cercana, random_pos, random_border_pos, random_target
 from coordinates import to_plan
 from extra import crear_dataframe, dibujar_animacion, guardar_dataframe
 from sensor.square_sensor import SquareSensor, SquareSensorPlan
 from busquedas import expanding_sq, lawnmower, rh_search
-from busquedas.heuristicas import heur_correcion_miopia
 from busquedas.aco import aco_search
 from busquedas.abc import abc_search
 from busquedas.bha import bha_search
@@ -388,20 +396,51 @@ steps = len(BK)
 # ------------------------------------------------------------
 # GUARDAR RESULTADOS Y VISUALIZACIÓN
 # ------------------------------------------------------------
-# Determinar carpeta de salida: si la config es del TFM, guardar en TFM_JC/resultados/
-out_dir = "resultados/"
-if "TFM_JC" in sys.argv[1]:
-    out_dir = "TFM_JC/resultados/"
+# Determinar carpeta de salida
+out_dir = params.get("out_dir", "resultados/")
+if "out_dir" not in params:
+    if "TFM_JC" in sys.argv[1]:
+        out_dir = "TFM_JC/resultados/"
 
 df = crear_dataframe(N_AGENTS, list_x, list_y, list_z, list_target, finder, agent_seed, goal_seed)
-guardar_dataframe(df, out_dir, nombre_alg, sys.argv[1].split("/")[-1].split(".")[0])
+guardar_dataframe(df, out_dir, nombre_alg, sys.argv[1].replace("\\", "/").split("/")[-1].split(".")[0])
 
+# Guardar la trayectoria detallada para análisis de SAREnv posterior
+try:
+    from pathlib import Path
+    dir_base = Path(out_dir)
+    prueba_name = sys.argv[1].replace("\\", "/").split("/")[-1].split(".")[0]
+    carpeta_prueba = dir_base / prueba_name
+    
+    # Encontrar el número del último archivo CSV guardado
+    num = 0
+    while (carpeta_prueba / f"{nombre_alg}-{num}.csv").exists():
+        num += 1
+    num_saved = max(0, num - 1)
+    
+    traj_path = carpeta_prueba / f"{nombre_alg}-{num_saved}-traj.json"
+    traj_data = {
+        "list_x": [x.tolist() for x in list_x],
+        "list_y": [y.tolist() for y in list_y],
+        "list_z": [z.tolist() for z in list_z],
+        "goal": goal.tolist() if isinstance(goal, np.ndarray) else goal,
+        "finder": int(finder) if finder is not None else None,
+        "steps": int(steps)
+    }
+    with open(traj_path, "w", encoding="utf-8") as f:
+        json.dump(traj_data, f, indent=4)
+    print("Trayectoria detallada guardada en:", traj_path)
+except Exception as e:
+    print(f"Error al guardar trayectoria detallada: {e}")
 
-dibujar_animacion(N_AGENTS, list_x, list_y, list_z, BK, list_target, size, steps, 
-                  seed, sensor.perimetro, height=HEIGHT)
+if params.get("dibujar_animacion", True):
+    dibujar_animacion(N_AGENTS, list_x, list_y, list_z, BK, list_target, size, steps, 
+                      seed, sensor.perimetro, height=HEIGHT)
+else:
+    print("Animación omitida (ejecución sin GUI).")
 
 if GENERAR_PLAN:
     to_plan(list_x, list_y, list_z, 0.0, 40.543595, -4.012085, "plan")
 
-
 print("OK")
+
