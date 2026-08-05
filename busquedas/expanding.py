@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 
 def expanding_sq(grid_size, bk, target, filter, init_pos, mov_d, separation, max_steps):
@@ -51,7 +52,7 @@ def expanding_sq(grid_size, bk, target, filter, init_pos, mov_d, separation, max
 
         # Actualizar mapa de creencias
         bk, target, found = filter(bk=bk, pos_agente=(c_x, c_y), pos_obj=target)
-        BK.append(bk)
+        BK.append(bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
         target_pos.append(target)
 
         # Verificar si encontró al objetivo
@@ -75,7 +76,7 @@ def expanding_sq(grid_size, bk, target, filter, init_pos, mov_d, separation, max
 
                 # Actualizar mapa de creencias
                 bk, target, found = filter(bk=bk, pos_agente=(c_x, c_y), pos_obj=target)
-                BK.append(bk)
+                BK.append(bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
                 target_pos.append(target)
 
                 # Verificar si encontró al objetivo

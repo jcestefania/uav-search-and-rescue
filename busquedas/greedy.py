@@ -1,6 +1,7 @@
 # Archivo con los distintos algoritmos de busqueda
 
 import numpy as np
+import os
 
 
 def rh_search(
@@ -72,10 +73,10 @@ def rh_search(
                 bk=bk, pos_agente=(curr[agent, 0:2]), pos_obj=target_pos[-1]
             )
             if len(BK) == steps:
-                BK.append(bk)
+                BK.append(bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
                 target_pos.append(target)
             else:
-                BK[steps] = bk
+                BK[steps] = bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None
 
             # Verificar si encontró al objetivo
             # y no sobreescribir el resultado de los otros

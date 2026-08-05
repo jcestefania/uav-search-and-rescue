@@ -461,10 +461,10 @@ def construct_trajectory_simultaneous(food_source, init_pos, bk, target, moves, 
 
         # Guardar estado después de que TODOS se hayan movido
         if len(BK) == steps:
-            BK.append(bk_iter)
+            BK.append(bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
             target_pos.append(new_target)
         else:
-            BK[steps] = bk_iter
+            BK[steps] = bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None
 
         steps += 1
 

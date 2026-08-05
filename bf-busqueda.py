@@ -12,7 +12,7 @@ import numpy as np
 from functools import partial
 
 # Selector para intercambiar entre el código original lento o el optimizado rápido
-USAR_OPTIMIZACION = True  # Por defecto original
+USAR_OPTIMIZACION = False  # Por defecto original
 
 if USAR_OPTIMIZACION:
     from busquedas.rbf_opt import rbf
@@ -115,6 +115,10 @@ GENERAR_PLAN = sys.argv[2].lower() in ["yes", "y"] if len(sys.argv) == 3 else Fa
 
 # Cargar configuración
 params = json.load(open(sys.argv[1]))
+
+# Inyectar variable de entorno si no se va a dibujar animación
+if not params.get("dibujar_animacion", True):
+    os.environ["MTS_SAVE_BK_HISTORY"] = "False"
 
 # ------------------------------------------------------------
 # PARÁMETROS COMUNES

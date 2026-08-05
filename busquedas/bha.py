@@ -319,10 +319,10 @@ def construct_trajectory_simultaneous(star, init_pos, bk, target, moves, grid_si
                 found = True
 
         if len(BK) == steps:
-            BK.append(bk_iter)
+            BK.append(bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
             target_pos.append(new_target)
         else:
-            BK[steps] = bk_iter
+            BK[steps] = bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None
 
         steps += 1
 

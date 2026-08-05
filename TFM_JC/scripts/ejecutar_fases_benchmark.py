@@ -125,16 +125,13 @@ def main():
     print("\n>>> FASE 3: Ejecutando simulaciones masivas en MTS (600 corridas en total)...")
     perfiles = ["autista", "demencia", "senderista"]
     algoritmos = ["voraz-heur", "ACO", "ABC", "BHA", "lawnmower", "expanding_sq"]
-    num_semillas = 3
+    num_semillas = 50
     
     for perfil in perfiles:
         json_path = f"TFM_JC/resultados/casa_de_campo_{perfil}/escenario_{perfil}.json"
         
-        # Limpiar directorio de resultados del escenario para evitar mezclar semillas
+        # Asegurar directorio de resultados del escenario
         resultados_dir = f"TFM_JC/resultados/escenario_{perfil}"
-        import shutil
-        if os.path.exists(resultados_dir):
-            shutil.rmtree(resultados_dir)
         os.makedirs(resultados_dir, exist_ok=True)
         
         with open(json_path, "r", encoding="utf-8") as f:
@@ -148,6 +145,16 @@ def main():
         for alg in algoritmos:
             print(f"   - Ejecutando algoritmo: {alg} ({num_semillas} semillas)...")
             for seed in range(num_semillas):
+                # Determinar nombre del archivo de trayectoria para comprobar si ya existe
+                alg_file = "expanding" if alg == "expanding_sq" else (
+                    "lawnmower" if alg == "lawnmower" else (
+                        f"bf_{alg.lower()}_ET" if alg in ["ACO", "ABC", "BHA"] else alg
+                    )
+                )
+                traj_file = os.path.join(resultados_dir, f"{alg_file}-{seed}-traj.json")
+                if os.path.exists(traj_file):
+                    continue
+                    
                 config["algoritmo_busqueda"] = alg
                 config["semilla"] = seed
                 

@@ -1,6 +1,7 @@
 # Archivo con los distintos algoritmos de busqueda
 
 import numpy as np
+import os
 
 from busquedas.heuristicas import heur_correcion_miopia
 
@@ -83,9 +84,9 @@ def rh_search_a(
             bk = bk / np.sum((1 - obs) * bk)
 
             if len(BK) == steps:
-                BK.append(bk)
+                BK.append(bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
             else:
-                BK[steps] = bk
+                BK[steps] = bk if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None
 
             # Check if the target has been found
             dist_obj_x = np.abs(curr[agent, 0] - target[0])

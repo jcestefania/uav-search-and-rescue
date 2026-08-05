@@ -248,10 +248,10 @@ def aco_search(
                     bk=bk_iter, pos_agente=(curr[agent, 0:2]), pos_obj=target_pos_iter[-1]
                 )
                 if len(BK_iter) == steps_iter:
-                    BK_iter.append(bk_iter)
+                    BK_iter.append(bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None)
                     target_pos_iter.append(new_target)
                 else:
-                    BK_iter[steps_iter] = bk_iter
+                    BK_iter[steps_iter] = bk_iter if os.environ.get("MTS_SAVE_BK_HISTORY", "True") != "False" else None
 
                 # Verificar si encontró el objetivo
                 if agent_found and not found:
