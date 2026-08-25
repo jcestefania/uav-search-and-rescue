@@ -179,7 +179,7 @@ if indicio_elegido is None:
 if indicio_elegido == -1:
     indicio_elegido = np.random.randint(0, len(indicios))
 
-if goal == [None]:
+if goal == [None] or goal == [[None]]:
     if ruta_real:
         # Muestrear posición del objetivo según la distribución de probabilidad real (bk)
         flat_bk = bk.flatten()
@@ -189,6 +189,8 @@ if goal == [None]:
     else:
         goal = random_target(indicios, COV, indicio_elegido, 3)
     goal_seed = seed
+elif isinstance(goal, (list, np.ndarray)) and len(goal) > 0 and isinstance(goal[0], (list, np.ndarray, tuple)):
+    goal = goal[0]
 
 goal = celda_mas_cercana(goal, bk)
 

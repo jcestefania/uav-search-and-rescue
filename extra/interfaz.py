@@ -4,8 +4,12 @@ import os
 import sys
 
 import numpy as np
-import plotly.graph_objects as go
-import plotly.io as pio
+try:
+    import plotly.graph_objects as go
+    import plotly.io as pio
+except ImportError:
+    go = None
+    pio = None
 from PIL import Image
 
 from .perimetro import perimetro_cuadrado

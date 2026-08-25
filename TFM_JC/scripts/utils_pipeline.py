@@ -3,6 +3,20 @@ import sys
 import json
 import subprocess
 import glob
+
+# Resolucion dinamica y automatica de rutas (detecta SAREnv y raiz de MTS)
+search_dir = os.path.abspath(os.getcwd())
+while search_dir and search_dir != os.path.dirname(search_dir):
+    sarenv_candidate = os.path.join(search_dir, "SAREnv")
+    if os.path.exists(sarenv_candidate) and sarenv_candidate not in sys.path:
+        sys.path.insert(0, sarenv_candidate)
+    sarenv_pkg = os.path.join(search_dir, "sarenv")
+    if os.path.isdir(sarenv_pkg) and search_dir not in sys.path:
+        sys.path.insert(0, search_dir)
+    if os.path.isdir(os.path.join(search_dir, "TFM_JC")) and search_dir not in sys.path:
+        sys.path.insert(0, search_dir)
+    search_dir = os.path.dirname(search_dir)
+
 import numpy as np
 import pandas as pd
 import geopandas as gpd

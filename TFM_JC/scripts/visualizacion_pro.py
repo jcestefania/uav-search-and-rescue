@@ -1,8 +1,23 @@
+"""
+visualizacion_pro.py
+====================
+Módulo de visualización avanzada para la evolución de trayectorias, mapas de creencias b(v^k)
+y comparativas lado a lado entre algoritmos de búsqueda SAR (MTS + SAREnv).
+
+Funciones principales:
+- load_scenario_and_trajectory: Carga de metadatos, heatmaps y trayectorias de vuelo.
+- compute_updated_belief_map: Simula la huella del sensor de 50m y el consumo de probabilidad.
+- plot_escenario_inicial: Renderiza LKP de despegue y posición de la víctima.
+- plot_evolucion_temporal: Panel de 4 instantes temporales b(v^0), b(v^100), b(v^300), b(v^500).
+- plot_comparativa_algoritmos_lado_a_lado: Comparativa simultánea de dos algoritmos en 6 paneles.
+"""
+
 import os
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 from pyproj import Proj
+
 
 def load_scenario_and_trajectory(perfil, algoritmo, semilla):
     """
@@ -62,6 +77,7 @@ def load_scenario_and_trajectory(perfil, algoritmo, semilla):
     
     return heatmap, bounds, path_utm_x, path_utm_y, (goal_utm_x, goal_utm_y), meter_per_bin, (list_x_local, list_y_local)
 
+
 def compute_updated_belief_map(heatmap, list_x_local, list_y_local, step_t, sensor_radius_cells=5):
     """
     Calcula el mapa de creencias actualizado b(v^t) aplicando la Huella del Sensor.
@@ -89,6 +105,7 @@ def compute_updated_belief_map(heatmap, list_x_local, list_y_local, step_t, sens
             pass
             
     return belief, visited_mask
+
 
 def plot_escenario_inicial(perfil, algoritmo="voraz-heur", semilla=0, output_path=None):
     """
@@ -118,6 +135,7 @@ def plot_escenario_inicial(perfil, algoritmo="voraz-heur", semilla=0, output_pat
         print(f"Mapa del escenario inicial guardado en: {output_path}")
     
     return fig, ax
+
 
 def plot_evolucion_temporal(perfil, algoritmo, semilla=0, hitos=None, output_path=None):
     """
@@ -172,6 +190,7 @@ def plot_evolucion_temporal(perfil, algoritmo, semilla=0, hitos=None, output_pat
         print(f"Evolución temporal b(v^k) guardada en: {output_path}")
         
     return fig, axes
+
 
 def plot_comparativa_algoritmos_lado_a_lado(perfil, alg1, alg2, semilla=0, hitos=None, output_path=None):
     """
@@ -238,59 +257,5 @@ def plot_comparativa_algoritmos_lado_a_lado(perfil, alg1, alg2, semilla=0, hitos
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         plt.savefig(output_path, dpi=300, bbox_inches="tight")
         print(f"Comparativa lado a lado guardada en: {output_path}")
-        
-    return fig, axes
-
-def plot_filtro_restricciones(perfil="autista", output_path=None):
-    """
-    Genera la figura de 3 paneles 'Antes y Después' que solicitó Jompy:
-    1. Mapa probabilístico base (sin filtrar)
-    2. Máscara binaria de restricciones físicas (Agua y Edificios = 0)
-    3. Mapa probabilístico final (filtrado y normalizado)
-    """
-    output_dir = f"TFM_JC/resultados/casa_de_campo_{perfil}"
-    p_unfilt = os.path.join(output_dir, "heatmap_unfiltered.npy")
-    p_filt = os.path.join(output_dir, "heatmap.npy")
-    p_geo = os.path.join(output_dir, "features.geojson")
-    
-    if not (os.path.exists(p_unfilt) and os.path.exists(p_filt) and os.path.exists(p_geo)):
-        raise FileNotFoundError(f"Archivos de mapa o restricciones no encontrados para el perfil {perfil}")
-        
-    map_unfilt = np.load(p_unfilt)
-    map_filt = np.load(p_filt)
-    
-    with open(p_geo, "r", encoding="utf-8") as f:
-        meta = json.load(f)
-    bounds = meta["bounds"]
-    extent = [bounds[0], bounds[2], bounds[1], bounds[3]]
-    
-    mask = np.ones_like(map_unfilt)
-    mask[map_filt == 0] = 0
-    
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    
-    im1 = axes[0].imshow(map_unfilt, origin="lower", extent=extent, cmap="YlOrRd")
-    axes[0].set_title(f"1. Base Probability Map (Unfiltered)", fontsize=11, fontweight="bold")
-    axes[0].set_xlabel("UTM Easting (m)", fontsize=10)
-    axes[0].set_ylabel("UTM Northing (m)", fontsize=10)
-    fig.colorbar(im1, ax=axes[0], fraction=0.046, pad=0.04)
-    
-    im2 = axes[1].imshow(mask, origin="lower", extent=extent, cmap="Blues_r", vmin=0, vmax=1)
-    axes[1].set_title(f"2. Physical Restriction Mask (Water & Buildings = 0)", fontsize=11, fontweight="bold")
-    axes[1].set_xlabel("UTM Easting (m)", fontsize=10)
-    fig.colorbar(im2, ax=axes[1], fraction=0.046, pad=0.04)
-    
-    im3 = axes[2].imshow(map_filt, origin="lower", extent=extent, cmap="YlOrRd")
-    axes[2].set_title(f"3. Final Filtered Map (Normalized)", fontsize=11, fontweight="bold")
-    axes[2].set_xlabel("UTM Easting (m)", fontsize=10)
-    fig.colorbar(im3, ax=axes[2], fraction=0.046, pad=0.04)
-    
-    plt.suptitle(f"Physical Restriction Filtering Process (Profile: {perfil.upper()})", fontsize=14, fontweight="bold", y=0.98)
-    plt.tight_layout()
-    
-    if output_path:
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        plt.savefig(output_path, dpi=300, bbox_inches="tight")
-        print(f"Gráfica de filtro de restricciones guardada en: {output_path}")
         
     return fig, axes
