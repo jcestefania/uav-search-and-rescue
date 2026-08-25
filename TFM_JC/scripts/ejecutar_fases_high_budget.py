@@ -11,8 +11,23 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from shapely.geometry import LineString
 
-# Inyectar la ruta local de SAREnv
-sys.path.insert(0, r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\SAREnv")
+# Resolucion dinamica y automatica de rutas
+search_dir = os.path.abspath(os.getcwd())
+mts_root = None
+while search_dir and search_dir != os.path.dirname(search_dir):
+    sarenv_candidate = os.path.join(search_dir, "SAREnv")
+    if os.path.exists(sarenv_candidate) and sarenv_candidate not in sys.path:
+        sys.path.insert(0, sarenv_candidate)
+    sarenv_pkg = os.path.join(search_dir, "sarenv")
+    if os.path.isdir(sarenv_pkg) and search_dir not in sys.path:
+        sys.path.insert(0, search_dir)
+    if os.path.isfile(os.path.join(search_dir, "bf-busqueda.py")):
+        mts_root = search_dir
+    search_dir = os.path.dirname(search_dir)
+
+if mts_root is None:
+    mts_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from sarenv.analytics.metrics import PathEvaluator
 
 # Configurar UTF-8 para evitar problemas de consola Windows
@@ -22,7 +37,7 @@ if sys.platform.startswith('win'):
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # Constantes
-MTS_DIR = os.path.abspath(r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados")
+MTS_DIR = mts_root
 BF_BUSQUEDA_PATH = os.path.join(MTS_DIR, "bf-busqueda.py")
 DIR_ORIG = os.path.join(MTS_DIR, "TFM_JC/resultados")
 DIR_HB = os.path.join(MTS_DIR, "TFM_JC/resultados_high_budget")

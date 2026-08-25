@@ -11,12 +11,25 @@ from shapely.geometry import LineString
 # Desactivar advertencias para mantener la consola limpia
 warnings.filterwarnings("ignore")
 
-# Configurar variables de entorno y sys.path
-os.environ["MTS_SAVE_BK_HISTORY"] = "False"
-SARENV_PATH = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\SAREnv"
-MTS_PATH = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados"
-sys.path.insert(0, SARENV_PATH)
-sys.path.insert(0, MTS_PATH)
+# Resolucion dinamica y automatica de rutas
+search_dir = os.path.abspath(os.getcwd())
+mts_root = None
+while search_dir and search_dir != os.path.dirname(search_dir):
+    sarenv_candidate = os.path.join(search_dir, "SAREnv")
+    if os.path.exists(sarenv_candidate) and sarenv_candidate not in sys.path:
+        sys.path.insert(0, sarenv_candidate)
+    sarenv_pkg = os.path.join(search_dir, "sarenv")
+    if os.path.isdir(sarenv_pkg) and search_dir not in sys.path:
+        sys.path.insert(0, search_dir)
+    if os.path.isfile(os.path.join(search_dir, "bf-busqueda.py")):
+        if search_dir not in sys.path:
+            sys.path.insert(0, search_dir)
+        mts_root = search_dir
+    search_dir = os.path.dirname(search_dir)
+
+if mts_root is None:
+    mts_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    sys.path.insert(0, mts_root)
 
 import optuna
 from sarenv.analytics.metrics import PathEvaluator
@@ -197,7 +210,7 @@ def optimize_profile_algorithm(perfil, algoritmo, pe_inf, heatmap, bounds, meter
 def main():
     print("=========================================================================")
     # Usar la ruta de resultados definitiva para cargar los mapas de calor
-    DIR_RESULTADOS = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados"
+    DIR_RESULTADOS = os.path.join(mts_root, "TFM_JC", "resultados")
     
     perfiles = ["autista", "demencia", "senderista"]
     algoritmos = ["ACO", "ABC", "BHA"]

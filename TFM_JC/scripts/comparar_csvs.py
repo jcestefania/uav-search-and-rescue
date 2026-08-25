@@ -1,9 +1,10 @@
+import os
 import pandas as pd
 import numpy as np
 
 def comparar():
-    csv_orig = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados\resultados_evaluacion_tfm.csv"
-    csv_opt = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados_opt\resultados_evaluacion_tfm.csv"
+    csv_orig = os.path.join("TFM_JC", "resultados", "resultados_evaluacion_tfm.csv")
+    csv_opt = os.path.join("TFM_JC", "resultados_opt", "resultados_evaluacion_tfm.csv")
     
     df_orig = pd.read_csv(csv_orig)
     df_opt = pd.read_csv(csv_opt)

@@ -1,7 +1,17 @@
 import os
 import sys
-# Inyectar la ruta local de SAREnv para que pueda ser importado
-sys.path.insert(0, r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\SAREnv")
+
+# Resolucion dinamica y automatica de rutas (detecta SAREnv y raiz de MTS)
+search_dir = os.path.abspath(os.getcwd())
+while search_dir and search_dir != os.path.dirname(search_dir):
+    sarenv_candidate = os.path.join(search_dir, "SAREnv")
+    if os.path.exists(sarenv_candidate) and sarenv_candidate not in sys.path:
+        sys.path.insert(0, sarenv_candidate)
+    sarenv_pkg = os.path.join(search_dir, "sarenv")
+    if os.path.isdir(sarenv_pkg) and search_dir not in sys.path:
+        sys.path.insert(0, search_dir)
+    search_dir = os.path.dirname(search_dir)
+
 import json
 import subprocess
 import numpy as np

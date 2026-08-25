@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def main():
-    csv_path = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados\resultados_evaluacion_tfm.csv"
-    out_dir = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados\graficas"
+    csv_path = os.path.join("TFM_JC", "resultados", "resultados_evaluacion_tfm.csv")
+    out_dir = os.path.join("TFM_JC", "resultados", "graficas")
     os.makedirs(out_dir, exist_ok=True)
     
     if not os.path.exists(csv_path):

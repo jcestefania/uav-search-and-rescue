@@ -1,7 +1,7 @@
 import os
 import json
 
-DIR_RESULTADOS = r"c:\Users\juanc\Desktop\TFM\TFM-Juan Carlos\Software\framwork-MTS\MTS-UncertainEnvironment-Algoritmos-bioinspirados\TFM_JC\resultados"
+DIR_RESULTADOS = os.path.join("TFM_JC", "resultados")
 best_params_path = os.path.join(DIR_RESULTADOS, "optuna_best_params.json")
 
 with open(best_params_path, "r", encoding="utf-8") as f:
