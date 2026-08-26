@@ -64,6 +64,9 @@ def dibujar_animacion(
     # Varios agentes (3)
     dibujar_animacion(3, [[0, 1, 2, 3, 4, 5], [1, 1, 1, 1, 1, 1], [0, 0, 1, 0, 1, 2]], [[0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 3]], [[8, 8, 8, 8, 8, 8], [8, 7, 7, 6, 7, 8], [8, 8, 8, 8, 8, 8]], BK, [4, 3], [10, 10], 6, 4, 1, 8, 0.2, 0.5, None,"seaborn", "isometric")
     """
+    if go is None or pio is None:
+        print("Plotly no está disponible en este entorno. Animación omitida.")
+        return None
 
     # Parametros del espacio 3D
     # Restamos 1 porque los bordes del mapa están definidos en el intervalo [0, size)
