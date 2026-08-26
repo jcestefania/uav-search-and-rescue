@@ -1,0 +1,70 @@
+{
+    "version": "1.1-SAREnv-Real",
+    "size": [
+        481,
+        458
+    ],
+    "ruta_mapa_real": "escenario_demencia.npy",
+    "num_agents": 1,
+    "height": 10,
+    "init_pos": [
+        [
+            205,
+            221
+        ]
+    ],
+    "mov_delta": 1,
+    "posible_moves": "8 dir",
+    "min_dist": 3,
+    "lambda": 0.5,
+    "num_steps": 1000,
+    "pdmax": 0.8,
+    "dmax": 2.1,
+    "sigma": 0.7,
+    "separation": 2,
+    "plan": false,
+    "algoritmo_busqueda": "voraz-heur",
+    "funcion_objetivo": "ET",
+    "optimization": "min",
+    "show_evolution": true,
+    "__COMENTARIO_ACO__": "=== PARAMETROS ACO (HORMIGAS) ===",
+    "n_ants": 20,
+    "n_iterations_aco": 5,
+    "alpha": 1.0,
+    "beta": 3.0,
+    "rho": 0.1,
+    "local_rho": 0.05,
+    "Q": 1.0,
+    "__COMENTARIO_ABC__": "=== PARAMETROS ABC (ABEJAS) ===",
+    "n_iterations_abc": 10,
+    "limit": 10,
+    "n_onlookers": 1,
+    "n_employed": 1,
+    "__COMENTARIO_BHA__": "=== PARAMETROS BHA (AGUJERO NEGRO) ===",
+    "n_iterations_bha": 10,
+    "n_stars": 5,
+    "indicios": [
+        [
+            205,
+            221
+        ]
+    ],
+    "cov": [
+        [
+            2,
+            0
+        ],
+        [
+            0,
+            2
+        ]
+    ],
+    "pesos": [
+        1.0
+    ],
+    "obj_pos": [
+        null
+    ],
+    "indicio": -1,
+    "semilla": 0
+}

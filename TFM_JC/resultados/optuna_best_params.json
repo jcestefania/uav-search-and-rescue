@@ -1,0 +1,89 @@
+{
+    "autista": {
+        "ACO": {
+            "params": {
+                "alpha": 0.8130900420809225,
+                "beta": 2.074772403501893,
+                "rho": 0.06880651913298919,
+                "local_rho": 0.0945548351694551,
+                "Q": 0.505263512354274,
+                "n_iterations_aco": 5
+            },
+            "score_acierto_medio": 4.233333333333333
+        },
+        "ABC": {
+            "params": {
+                "n_iterations_abc": 9,
+                "limit": 19,
+                "n_employed": 1,
+                "n_onlookers": 4
+            },
+            "score_acierto_medio": 4.266666666666667
+        },
+        "BHA": {
+            "params": {
+                "n_iterations_bha": 8,
+                "n_stars": 9
+            },
+            "score_acierto_medio": 3.6666666666666665
+        }
+    },
+    "demencia": {
+        "ACO": {
+            "params": {
+                "alpha": 0.7293583435897979,
+                "beta": 2.2206925938165876,
+                "rho": 0.21539205836840164,
+                "local_rho": 0.12909767211277823,
+                "Q": 2.017860976215276,
+                "n_iterations_aco": 6
+            },
+            "score_acierto_medio": 5.466666666666666
+        },
+        "ABC": {
+            "params": {
+                "n_iterations_abc": 8,
+                "limit": 11,
+                "n_employed": 3,
+                "n_onlookers": 4
+            },
+            "score_acierto_medio": 6.033333333333334
+        },
+        "BHA": {
+            "params": {
+                "n_iterations_bha": 12,
+                "n_stars": 10
+            },
+            "score_acierto_medio": 5.3
+        }
+    },
+    "senderista": {
+        "ACO": {
+            "params": {
+                "alpha": 1.4754051406422761,
+                "beta": 2.0926071316411616,
+                "rho": 0.14341702577216506,
+                "local_rho": 0.023893172712880634,
+                "Q": 0.8906666597964554,
+                "n_iterations_aco": 4
+            },
+            "score_acierto_medio": 2.6666666666666665
+        },
+        "ABC": {
+            "params": {
+                "n_iterations_abc": 13,
+                "limit": 16,
+                "n_employed": 2,
+                "n_onlookers": 3
+            },
+            "score_acierto_medio": 3.8000000000000003
+        },
+        "BHA": {
+            "params": {
+                "n_iterations_bha": 9,
+                "n_stars": 8
+            },
+            "score_acierto_medio": 2.8333333333333335
+        }
+    }
+}
