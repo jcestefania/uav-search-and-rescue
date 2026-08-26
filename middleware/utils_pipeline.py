@@ -176,7 +176,7 @@ def ejecutar_middleware(nombre_perfil):
     # Argumentos para el middleware
     cmd = [
         sys.executable,
-        "TFM_JC/scripts/generar_json_real.py",
+        "middleware/generar_json_real.py",
         "--geojson", geojson_path,
         "--npy", npy_path,
         "--out", out_json,
