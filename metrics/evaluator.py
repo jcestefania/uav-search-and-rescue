@@ -1,41 +1,43 @@
-# TFM_JC/scripts/path_evaluator_tfm.py
 """
-PathEvaluatorTFM: Módulo de evaluación unificado para el TFM.
-Mantiene la compatibilidad con el PathEvaluator original de SAREnv sin modificar la librería original.
-Añade métricas específicas de MTS (Probabilidad Acumulada, Tasa de Acierto, Pasos a la Meta, Área Cubierta y Distancia Total)
-tanto para trayectorias de SAREnv como de MTS.
+PathEvaluatorTFM: Módulo de evaluación unificado para el Framework MTS + SAREnv.
+Calcula métricas SAR estándar:
+- Tasa de Acierto (Success Rate)
+- Pasos a la Meta (Steps to Goal)
+- Probabilidad Acumulada (Cumulative Probability)
+- Área Cubierta (Area Covered en m2)
+- Distancia Total Recorrida (Total Distance en m)
 """
+
 import os
 import json
 import numpy as np
 import geopandas as gpd
 from shapely.geometry import LineString, Point
 from shapely.ops import unary_union
-from scipy.interpolate import RegularGridInterpolator
 
 class PathEvaluatorTFM:
     """
-    Evaluador unificado de trayectorias para el TFM.
-    Soporta la evaluación cruzada entre algoritmos bioinspirados de MTS y baselines de SAREnv.
+    Evaluador unificado de trayectorias SAR para el framework MTS + SAREnv.
+    Soporta la evaluación cruzada entre algoritmos bioinspirados de MTS y baselines continuos de SAREnv.
     """
-    def __init__(self, heatmap: np.ndarray, extent: tuple, victims: gpd.GeoDataFrame, fov_deg: float = 60.0, altitude: float = 50.0, meters_per_bin: int = 10):
+    def __init__(self, heatmap: np.ndarray, extent: tuple, victims: gpd.GeoDataFrame = None, fov_deg: float = 60.0, altitude: float = 50.0, meters_per_bin: int = 10):
         """
         Inicializa el evaluador.
 
         Args:
             heatmap (np.ndarray): Matriz 2D de la densidad de probabilidad (heatmap.npy).
             extent (tuple): Límites (minx, miny, maxx, maxy) en UTM o coordenadas locales.
-            victims (gpd.GeoDataFrame): GeoDataFrame con los puntos de las víctimas.
+            victims (gpd.GeoDataFrame, optional): GeoDataFrame con los puntos de las víctimas.
             fov_deg (float): Campo de visión de la cámara del dron en grados.
             altitude (float): Altitud de vuelo del dron en metros.
             meters_per_bin (int): Tamaño de celda de la rejilla en metros.
         """
         self.heatmap = heatmap
         self.extent = extent
-        self.victims = victims
+        self.victims = victims if victims is not None else gpd.GeoDataFrame()
         self.meters_per_bin = meters_per_bin
         
-        # Radio de detección de la cámara según altitud y ángulo FoV (Nivel 1: Sensor Ideal)
+        # Radio de detección de la cámara según altitud y ángulo FoV (Sensor Ideal)
         self.detection_radius = altitude * np.tan(np.radians(fov_deg / 2.0))
         
         # Tamaño de celda en X e Y
