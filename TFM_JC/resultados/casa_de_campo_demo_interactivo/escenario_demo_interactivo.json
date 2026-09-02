@@ -23,10 +23,10 @@
     "sigma": 0.7,
     "separation": 2,
     "plan": false,
-    "algoritmo_busqueda": "voraz-heur",
+    "algoritmo_busqueda": "ACO",
     "funcion_objetivo": "ET",
     "optimization": "min",
-    "show_evolution": true,
+    "show_evolution": false,
     "__COMENTARIO_ACO__": "=== PARAMETROS ACO (HORMIGAS) ===",
     "n_ants": 20,
     "n_iterations_aco": 5,
@@ -63,9 +63,12 @@
         1.0
     ],
     "obj_pos": [
-        200,
-        200
+        [
+            253,
+            238
+        ]
     ],
     "indicio": -1,
-    "semilla": 0
+    "semilla": 0,
+    "dibujar_animacion": false
 }
