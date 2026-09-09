@@ -80,18 +80,37 @@ pip install -r requirements.txt
 
 ---
 
-## Interactive Quick Start
+## Interactive Notebooks Guide
 
-Launch Jupyter Lab or Notebook to explore the interactive simulation:
+The framework includes three dedicated, production-ready Jupyter Notebooks located in `TFM_JC/notebooks/`:
+
+Launch Jupyter Lab or Notebook to interact with them:
 
 ```bash
 jupyter lab
 ```
 
-Open `TFM_JC/notebooks/Notebook_Demo_Rapida_Interactiva.ipynb`:
-1. Select the operational profile (Dementia, Autistic, Hiker).
-2. Choose the planning algorithm (ABC, BHA, ACO, Voraz, Lawnmower).
-3. Execute the cells to visualize the dual real-time panel: flight trajectory evolution over the belief map and step-by-step SAR metrics.
+### 1. `Notebook_Demo_Rapida_Interactiva.ipynb` (Quick Dual-Panel Flight Demo)
+- **Purpose:** Fast, visual, and interactive demonstration of individual search missions.
+- **Features:** 
+  - Dual real-time GUI: Left panel renders the 2D UAV flight path advancing over the residual belief map $b(v^k)$; right panel displays live radar/step charts of the 5 official SAR metrics.
+  - Dropdown selectors to swap between behavioral profiles (Dementia, Autistic, Hiker) and algorithms (ABC, BHA, ACO, Greedy, Lawnmower).
+  - Fast execution mode with caching for instant interactive demonstrations and tribunal presentations.
+
+### 2. `Benchmark_Perfiles_Real_Interactivo.ipynb` (Full Pipeline & Advanced Benchmark)
+- **Purpose:** Comprehensive, end-to-end mission engineering and multi-algorithm benchmarking panel.
+- **Features:**
+  - Full configuration of OpenStreetMap multilayer weights (`FEATURE_PROBABILITIES`) and Robert Koester's empirical LPB dispersion models.
+  - Parameter customization: sensor footprint radius, altitude, flight budget (battery steps), and initial seed distributions.
+  - Side-by-side trajectory execution and spatial overlay comparison between bio-inspired planners (ABC vs. BHA vs. ACO) and geometric baselines.
+  - Telemetry generation and direct export to CSV/JSON format for validation.
+
+### 3. `Analisis_Resultados.ipynb` (Statistical Analysis & Figure Generation)
+- **Purpose:** Post-processing and rigorous statistical analysis of the 900 Monte Carlo simulation runs.
+- **Features:**
+  - Automated loading of the master database (`TFM_JC/resultados/resultados_totales.csv`).
+  - Descriptive statistics calculation: means, medians, standard deviations, and Interquartile Ranges (IQR).
+  - High-resolution (300 DPI) reproduction of all paper and thesis figures, boxplots, success rate charts, and temporal belief decay curves.
 
 ---
 
