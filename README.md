@@ -1,6 +1,6 @@
 # Intelligent UAV Search & Rescue Routing over Vectorized OpenStreetMap Maps
 
-[![MSc Thesis](https://img.shields.io/badge/MSc%20Thesis-UC3M%20(Grade%3A%209.6%2F10)-003366?style=flat-square&logo=academia)](https://www.uc3m.es/)
+[![MSc Thesis](https://img.shields.io/badge/MSc%20Thesis-UC3M%20(Grade%3A%209.6%2F10)-003366?style=flat-square&logo=academia)](memoria/TFM_IA_Juan_Carlos_Estefania.pdf)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-3776AB?style=flat-square&logo=python)](requirements.txt)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 [![Robotics](https://img.shields.io/badge/Field-Robotics%20%26%20Autonomous%20Systems-FF6F00?style=flat-square)](https://www.uc3m.es/)
@@ -13,6 +13,12 @@
 > **Author:** Juan Carlos Estefanía  
 > **Advisors:** Prof. Jesús García Herrero & Prof. Juan Pedro Llerena Caña  
 > **Research Group:** Applied Artificial Intelligence Group (GIAA) — UC3M  
+
+---
+
+## 📄 Full Documentation
+
+You can read the full academic dissertation here: 👉 **[Download Project Memory (PDF)](memoria/TFM_IA_Juan_Carlos_Estefania.pdf)**
 
 ---
 
@@ -101,6 +107,7 @@ The framework was benchmarked on the **Casa de Campo** region (Madrid, Spain, $1
 
 ```text
 .
+├── memoria/            # Master's Thesis complete academic monograph (PDF)
 ├── sarenv/             # SAREnv core: OSM downloader, LPB generator, R-Tree filters
 ├── busquedas/          # Bioinspired planners: ABC, BHA, ACO, Greedy, Lawnmower
 ├── metrics/            # PathEvaluatorTFM: SAR evaluation metrics suite
