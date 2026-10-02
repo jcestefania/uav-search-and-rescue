@@ -339,7 +339,7 @@ def aco_search(
 
     # Mostrar y guardar evolución si se solicita
     
-    save_path = "TFG_Romeo\\resultados\\funciones_obj"
+    save_path = os.path.join("extra", "resultados_funciones_obj")
     os.makedirs(save_path, exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

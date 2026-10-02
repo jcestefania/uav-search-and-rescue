@@ -282,7 +282,7 @@ def abc_search(
     df_evolution = pd.DataFrame(evolution_data)
 
     # === GUARDAR RESULTADOS ===
-    save_path = "TFG_Romeo\\resultados\\funciones_obj"
+    save_path = os.path.join("extra", "resultados_funciones_obj")
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
